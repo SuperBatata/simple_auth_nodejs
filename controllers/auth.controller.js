@@ -7,11 +7,14 @@ var jwt = require("jsonwebtoken");
 var bcrypt = require("bcryptjs");
 
 exports.signup = (req, res) => {
+  console.log("req.body", req.body);
   const user = new User({
     username: req.body.username,
     email: req.body.email,
     password: bcrypt.hashSync(req.body.password, 8),
   });
+
+  console.log("user", user);
 
   user.save((err, user) => {
     if (err) {
@@ -86,17 +89,14 @@ exports.signin = (req, res) => {
         return res.status(401).send({ message: "Invalid Password!" });
       }
 
-      var token = jwt.sign({ id: user.id }, config.secret, {
-        expiresIn: 86400, // 24 hours
-      });
-
+     
       var authorities = [];
 
       for (let i = 0; i < user.roles.length; i++) {
         authorities.push("ROLE_" + user.roles[i].name.toUpperCase());
       }
 
-      req.session.token = token;
+      
 
       res.status(200).send({
         id: user._id,
