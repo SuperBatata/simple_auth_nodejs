@@ -8,7 +8,7 @@ const app = express();
 require("./routes/auth.routes")(app);
 require("./routes/user.routes")(app);
 let corsOptions = {
-  origin: "http://localhost:8081",
+  origin: "http://127.0.0.1:5173",
 };
 
 app.use(cors(corsOptions));
@@ -27,11 +27,9 @@ app.use(
   })
 );
 
-db.mongoose
-  .connect(
-    `mongodb+srv://digivolution:1gnFIIrULVdF6VNi@cluster0.b9eqq9e.mongodb.net/?retryWrites=true&w=majority`
-  
-  )
+db.mongoose.connect(
+  `mongodb+srv://digivolution:1gnFIIrULVdF6VNi@cluster0.b9eqq9e.mongodb.net/?retryWrites=true&w=majority`
+);
 
 db.mongoose.connection.on("error", (err) => {
   console.log("err", err);
