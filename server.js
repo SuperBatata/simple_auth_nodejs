@@ -4,7 +4,6 @@ const cookieSession = require("cookie-session");
 
 const db = require("./models");
 const Role = db.role;
-const dbConfig = require("./config/db.config");
 const app = express();
 require("./routes/auth.routes")(app);
 require("./routes/user.routes")(app);
